@@ -27,10 +27,10 @@ class Node:
         return node
     
     
+    # visualize: https://jsoncrack.com/editor (may break if you paste with indent)
     def to_dict(self):
 
         byte_rep = "".join([format(b, "08b") for b in self.byte or []])
-        
         
         node = {
             "byte": byte_rep if byte_rep != "" else None,
