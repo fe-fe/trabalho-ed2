@@ -1,6 +1,7 @@
 import os
 import time
 from binary_tree import Node
+import json
 
 def get_binary_file_stream(file_path: str, chunk_bytes: int = 100):
     with open(file_path, "rb") as file:
@@ -22,13 +23,13 @@ def build_huffman_frequency_tree(freq_dict: dict) -> Node:
     freq_items = sorted(
         freq_dict.items(),
         key=lambda item: item[1],
-        reverse=True
+        reverse=False
     )
     edges = [Node.from_tuple(item) for item in freq_items]
     while True:
         
-        left = edges[0]
-        right = edges[1]
+        left = edges[1]
+        right = edges[0]
         node = Node.from_edges(left, right)
         edges = edges[2:]
         if len(edges) > 0:
@@ -43,4 +44,9 @@ if __name__ == "__main__":
     for c in get_binary_file_stream("test.txt"):
         get_chunk_byte_frequency(c, freq_dict)
     tree = build_huffman_frequency_tree(freq_dict)
-    print(tree.to_dict())
+    print(
+        json.dumps(
+            tree.to_dict(),
+            indent=0
+        )
+    )
