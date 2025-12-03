@@ -42,5 +42,9 @@ class Node:
         return node
     
     
+    def is_leaf(self) -> bool:
+        return not self.left and not self.right
+    
+    
     def __str__(self):
         return f"byte {self.byte}: {self.freq}"
