@@ -106,12 +106,6 @@ def compress_file(file_path: str) -> None:
 
 
 def decompress_bit_string(bits_string: str, current_node: Node, tree_root: Node) -> tuple[bytearray, Node]:
-    """
-    Decodes a string of bits (e.g. "10110") into bytes.
-    Returns:
-       - The decoded bytes found so far.
-       - The Node where we stopped (to continue next time).
-    """
     decoded_data = bytearray()
     node = current_node
     
@@ -122,7 +116,6 @@ def decompress_bit_string(bits_string: str, current_node: Node, tree_root: Node)
             node = node.right
         
         if node.is_leaf():
-            # FIXED: Used append() instead of extend() because node.byte is an int
             decoded_data.append(node.byte)
             node = tree_root
             
