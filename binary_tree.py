@@ -10,7 +10,7 @@ class Node:
     @staticmethod
     def from_tuple(freq_tuple: tuple) -> "Node":
         node = Node()
-        node.byte = bytes([freq_tuple[0]])
+        node.byte = freq_tuple[0]
         node.freq = freq_tuple[1]
         node.left = None
         node.right = None
