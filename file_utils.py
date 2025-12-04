@@ -1,4 +1,5 @@
 import os
+import filecmp
 
 def get_binary_file_stream(file_path: str, chunk_bytes: int = 100):
     with open(file_path, "rb") as file:
@@ -24,3 +25,7 @@ def build_compressed_file_name(file_path: str) -> str:
     file, extension = os.path.splitext(file_path)
     file += "_compressed"
     return file + extension
+
+
+def check_decompression(original_path, decompressed_path) -> bool:
+    return filecmp.cmp(original_path, decompressed_path)
