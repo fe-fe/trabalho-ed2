@@ -63,8 +63,7 @@ def compress_chunk_bytes(chunk: bytes, code_dict: dict) -> str:
     return compressed_chunk
 
 
-def compress_file(file_path: str) -> None:
-    compressed_file_path = build_compressed_file_name(file_path)
+def compress_file(file_path: str, result_path: str) -> None:
     freq_dict = dict()
     for chunk in get_binary_file_stream(file_path, 1024):
         get_stream_byte_frequency(chunk, freq_dict)
@@ -77,7 +76,7 @@ def compress_file(file_path: str) -> None:
     code_dict = dict()
     get_codes(tree, code_dict, str())
     
-    with open(compressed_file_path, "wb") as file_out:
+    with open(result_path, "wb") as file_out:
         pickle.dump(freq_dict, file_out)
         
         buffer_str = "" 
@@ -129,11 +128,7 @@ def decompress_bit_string(bits_string: str, current_node: Node, tree_root: Node)
     return decoded_data, node
 
 
-def decompress_file(file_path: str) -> None:
-    decompressed_path = file_path.replace("_compressed", "_restored")
-    if decompressed_path == file_path:
-        decompressed_path += "_restored"
-
+def decompress_file(file_path: str, result_path: str) -> None:
     with open(file_path, "rb") as file_in:
         try:
             freq_dict = pickle.load(file_in)
@@ -143,7 +138,7 @@ def decompress_file(file_path: str) -> None:
 
         tree = build_huffman_frequency_tree(freq_dict)
 
-        with open(decompressed_path, "wb") as file_out:
+        with open(result_path, "wb") as file_out:
             current_node = tree
             current_chunk = file_in.read(1024)
             
